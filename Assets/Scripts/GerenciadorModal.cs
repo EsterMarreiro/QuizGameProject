@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +26,12 @@ public class ModalManager : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
         Instance = this;
 
         modalDict = new Dictionary<ModalType, GameObject>();
@@ -41,10 +46,9 @@ public class ModalManager : MonoBehaviour
     void Start()
     {
         CloseAll();
-        StartCoroutine(ShowAfterDelay(ModalType.Aviso, 2f));
     }
 
-    // 🔹 abre modal (uso interno)
+    // abre modal (uso interno)
     public void ShowModal(ModalType type)
     {
         CloseAll();
@@ -55,7 +59,7 @@ public class ModalManager : MonoBehaviour
         }
     }
 
-    // 🔹 fecha modal (uso interno)
+    // fecha modal (uso interno)
     public void CloseModal(ModalType type)
     {
         if (modalDict.ContainsKey(type))
@@ -64,13 +68,13 @@ public class ModalManager : MonoBehaviour
         }
     }
 
-    // 🔹 abre por índice (para UI Button)
+    // abre por índice (para UI Button)
     public void ShowModalByIndex(int index)
     {
         ShowModal((ModalType)index);
     }
 
-    // 🔹 fecha por índice (para UI Button)
+    // fecha por índice (para UI Button)
     public void CloseModalByIndex(int index)
     {
         CloseModal((ModalType)index);
@@ -82,11 +86,5 @@ public class ModalManager : MonoBehaviour
         {
             modal.SetActive(false);
         }
-    }
-
-    IEnumerator ShowAfterDelay(ModalType type, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        ShowModal(type);
     }
 }
