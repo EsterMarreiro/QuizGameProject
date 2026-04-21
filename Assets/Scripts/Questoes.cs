@@ -72,6 +72,12 @@ public class Questoes : MonoBehaviour
     public string codigoDesativacao = "9982-X";
     public TMP_Text textoCodigoNoBotaoDificil;
 
+    [Header("Temporizador")]
+    public float tempoLimite = 60f;
+    public AudioSource audioSourceTempo;
+    public AudioClip somTempoEsgotado;
+    public TMP_Text textoTemporizador;
+
     [Header("Banco de Perguntas")]
     public List<PerguntaData> perguntasFacil = new List<PerguntaData>();
     public List<PerguntaData> perguntasMedio = new List<PerguntaData>();
@@ -94,6 +100,9 @@ public class Questoes : MonoBehaviour
     private float tempoTotalGasto;
     private float bloqueioInteracaoAte;
 
+    private float tempoRestante;
+    private bool temporizadorAtivo;
+
     private void Awake()
     {
         PreencherBancosPadraoSeVazio();
@@ -110,6 +119,43 @@ public class Questoes : MonoBehaviour
         quizEmAndamento = false;
         FecharTodosOsModais();
         AtualizarVisibilidadeBotoesDeNivel();
+    }
+
+    private void Update()
+    {
+        if (!temporizadorAtivo) return;
+
+        tempoRestante -= Time.deltaTime;
+
+        if (textoTemporizador != null)
+        {
+            textoTemporizador.text = Mathf.CeilToInt(tempoRestante).ToString();
+        }
+
+        if (tempoRestante <= 0f)
+        {
+            TempoEsgotado();
+        }
+    }
+
+    private void TempoEsgotado()
+    {
+        temporizadorAtivo = false;
+        tempoRestante = 0f;
+
+        if (audioSourceTempo != null && somTempoEsgotado != null)
+        {
+            audioSourceTempo.PlayOneShot(somTempoEsgotado);
+        }
+
+        errosNivelAtual++;
+        quantidadeErrosTotal++;
+        sequenciaAcertosAtual = 0;
+
+        ReiniciarNivelAtual();
+
+        tempoRestante = tempoLimite;
+        temporizadorAtivo = true;
     }
 
     public void IniciarNivelFacil()
@@ -296,6 +342,9 @@ public class Questoes : MonoBehaviour
         indicePerguntaAtual = 0;
         quizEmAndamento = true;
 
+        tempoRestante = tempoLimite;
+        temporizadorAtivo = true;
+
         if (modalPergunta != null)
         {
             modalPergunta.SetActive(true);
@@ -312,6 +361,8 @@ public class Questoes : MonoBehaviour
 
     private void ConcluirNivel()
     {
+        temporizadorAtivo = false;
+
         quizEmAndamento = false;
         BloquearInteracaoPor(0.25f);
 
@@ -399,6 +450,8 @@ public class Questoes : MonoBehaviour
 
     private void FecharTodosOsModais()
     {
+        temporizadorAtivo = false;
+
         if (ModalManager.Instance != null)
         {
             ModalManager.Instance.CloseAll();
