@@ -593,7 +593,6 @@ GameObject:
   - component: {fileID: 942126647}
   - component: {fileID: 942126646}
   - component: {fileID: 942126649}
-  - component: {fileID: 942126650}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -661,18 +660,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf378628c704f0d40ae973a1a08ab0bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &942126650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 942126645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee06297e5ea553b4f8ab74815549de60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &963194225
@@ -983,7 +970,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1677021927}
-  - component: {fileID: 1677021928}
+  - component: {fileID: 1677021929}
+  - component: {fileID: 1677021930}
   m_Layer: 5
   m_Name: BackgroundSound
   m_TagString: Untagged
@@ -1010,7 +998,19 @@ RectTransform:
   m_AnchoredPosition: {x: 400, y: 237.64584}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!82 &1677021928
+--- !u!114 &1677021929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677021926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee06297e5ea553b4f8ab74815549de60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!82 &1677021930
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1028,7 +1028,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 29
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
